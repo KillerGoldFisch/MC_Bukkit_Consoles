@@ -8,6 +8,8 @@
 
 	- 1.8.8-R0.1-SNAPSHOT (v1_8_R3)
 
+	- 1.12.2-R0.1-SNAPSHOT (v1_12_R1)
+
 - You need a maven installation. BuildTools will download one for itself, you can simply add its maven directory to your system path, or install maven normally (on most Linux distributions, you can run `apt-get install maven2`)
 
 ### Natives
@@ -29,16 +31,3 @@ for the 64-bit requirements.
 The maven configuration should do everything for you; running `mvn install` will generate artifacts in the modules' respective target directories. Consoles will have an usable plugin jar in the `consoles-core/target/final` folder, which has all the dependencies it needs to function.
 
 You can use the builds for bungee straight from the `consoles-bungee/target` folder (it does not require any packaged dependencies), but if you try to use the jars in the `target` folder for other modules (instead of the jars in the `final` folder`), you will be missing a lot of dependencies that don't come with craftbukkit/spigot!
-
-If you want 32-bit support, you need to add it in the `consoles-computer`'s `pom.xml` (`ELF32`). Make sure you have the required 32-bit libraries installed.
-
-### Not compiling for/on Linux
-
-If you're not compiling on Linux, you're going to need to be willing to spend a few hours getting it to compile for your platform. The code itself will compile through MinGW and on OSX, however:
-
- - on Windows, you will need to link the library to paths in your system pointing to `libffi-6.dll` and `lua51.dll`, which are obtainable by compiling the respective libraries or getting pre-compiled builds.
-
- - on OSX, you'll probably want homebrew installed so you can easily grab libffi6 and luajit
-
-You'll also need to modify the `pom.xml` file for `consoles-computers` to reflect the platform you're trying to build for. Edit the configurations for `gcc-maven-plugin` with the proper parameters and `<targetPlatforms>` entries. For OSX, you should simply need to change the target to `OSX`, and on Windows you'll need to add `WIN32`/`WIN64` and change multiple parameters so the right include directories are added, and the correct libraries are linked against.
-
